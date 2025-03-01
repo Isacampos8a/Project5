@@ -14,7 +14,18 @@ import { faker } from '@faker-js/faker'
     const clockouttime = new Date(clockintime.getTime() + Math.random() * (8 * 60 * 60 * 1000));
     const clockouthours = clockouttime.getHours().toString().padStart(2, '0');
     const clockoutminutes = clockouttime.getMinutes().toString().padStart(2, '0');
-    const formattedclockouttime = `${clockouthours}:${clockoutminutes}`;
+const formattedclockouttime = `${clockouthours}:${clockoutminutes}`;
+
+const breaktimeinminutes = 30;
+
+//foramtted Time duration
+const durationMilliseconds = clockouttime - clockintime; 
+
+const breaktimemilliseconds = breaktimeinminutes * 60 * 1000;
+const adjustedDurationMilliseconds = durationMilliseconds - breaktimemilliseconds
+const durationhours = Math.floor(adjustedDurationMilliseconds / (1000 * 60 * 60));
+const durationminutes = Math.floor((adjustedDurationMilliseconds % (1000 * 60 * 60)) / (1000 * 60));
+const formattedduration = `${durationhours}h ${durationminutes}m`
 
 
 </script>
@@ -28,9 +39,12 @@ import { faker } from '@faker-js/faker'
             
 
 
-        <p class="text"> {{ firstname }} {{ lastname }} </p>
-        <p class="">Clock-in Time: {{ formattedclockintime }}</p>
-        <p class="">Clock-out Time: {{ formattedclockouttime }}</p>
+        <p class="mb-2 text-2x1 font-bold"> {{ firstname }} {{ lastname }} </p>
+        <p class="mb-3 font-normal text-gray-800">Clock-in Time: {{ formattedclockintime }}</p>
+        <p class="mb-3 font-normal text-gray-800">Clock-out Time: {{ formattedclockouttime }}</p>
+        <p class="mb-3 font-normal text-gray-800">Break Time (in Minutes): {{ breaktimeinminutes }}</p>
+        <p class="mb-3 font-normal text-gray-800">Time Duration: {{ formattedduration }}</p>
+
         </div>
 
     </div>
