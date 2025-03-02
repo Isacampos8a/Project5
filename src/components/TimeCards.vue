@@ -10,30 +10,47 @@ import { faker } from '@faker-js/faker'
     const clockinminutes = clockintime.getMinutes().toString().padStart(2, '0');
     const formattedclockintime = `${clockinhours}:${clockinminutes}`;
 
-    //formatted clock out time
-    const clockouttime = new Date(clockintime.getTime() + Math.random() * (8 * 60 * 60 * 1000));
+        //formatted clock out time
+    let clockouttime = new Date(clockintime.getTime() + Math.random() * (8 * 60 * 60 * 1000));
+
+    //makes sure the clockout time is After the clockin time
+    if (clockouttime < clockintime) {
+        const temp = clockintime;
+        clockintime = clockouttime;
+        clockouttime = temp;
+    }
+
     const clockouthours = clockouttime.getHours().toString().padStart(2, '0');
     const clockoutminutes = clockouttime.getMinutes().toString().padStart(2, '0');
-const formattedclockouttime = `${clockouthours}:${clockoutminutes}`;
+    const formattedclockouttime = `${clockouthours}:${clockoutminutes}`;
 
-const breaktimeinminutes = 30;
+    const breaktimeinminutes = 30;
 
-//foramtted Time duration
-const durationMilliseconds = clockouttime - clockintime; 
+    //foramtted Time duration
+    let durationMilliseconds = clockouttime - clockintime; 
 
-const breaktimemilliseconds = breaktimeinminutes * 60 * 1000;
-const adjustedDurationMilliseconds = durationMilliseconds - breaktimemilliseconds
-const durationhours = Math.floor(adjustedDurationMilliseconds / (1000 * 60 * 60));
-const durationminutes = Math.floor((adjustedDurationMilliseconds % (1000 * 60 * 60)) / (1000 * 60));
-const formattedduration = `${durationhours}h ${durationminutes}m`
+    const mininmunDurationMilliseconds = 3 * 60 * 60 * 1000;
+
+    //makes sure is no less than 3 hours
+    if (durationMilliseconds < mininmunDurationMilliseconds) {
+        const additionalTime = mininmunDurationMilliseconds - durationMilliseconds;
+        clockouttime = new Date(clockouttime.getTime() + additionalTime)
+        durationMilliseconds = clockouttime - clockintime;
+    }
+
+    const breaktimemilliseconds = breaktimeinminutes * 60 * 1000;
+    const adjustedDurationMilliseconds = durationMilliseconds - breaktimemilliseconds
+    const durationhours = Math.floor(adjustedDurationMilliseconds / (1000 * 60 * 60));
+    const durationminutes = Math.floor((adjustedDurationMilliseconds % (1000 * 60 * 60)) / (1000 * 60));
+    const formattedduration = `${durationhours}h ${durationminutes}m`
 
 
 </script>
     
 <template>
 
-    <div class="border border-gray-500 rounded-lg shadow bg-white h-full">
-        <img class="object-fill h-480 w-960 rounded-t-lg" v-bind:src="faker.image.urlLoremFlickr({ category: 'person', height: 480, width: 960 })" alt="Random Person"/>
+    <div class="border border-gray-500 rounded-3xl shadow bg-white h-full">
+        <img class="object-fill h-480 w-960 rounded-t-3xl" v-bind:src="faker.image.urlLoremFlickr({ category: 'person', height: 480, width: 960 })" alt="Random Person"/>
 
         <div class="p-5">
             

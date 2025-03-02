@@ -24,8 +24,8 @@ const nextPage = () => {
 </script>
 <template>
     <div class="flex justify-center gap-4 p-8 bg-yellow-50">
-        <button @click="prevPage" :disabled="activePage === 1" class="rounded-lg bg-slate-100 p-2 font-medium text-slate-800 shadow-md">PREV</button>
-        <button v-for="page in pages" :key="page" class="rounded-lg bg-slate-100 p-2 font-medium text-slate-800 shadow-md" :class="page === activePage ? 'bg-yellow-300 text-slate-700' : '' " >{{ page }}</button>               
-        <button @click="nextPage" :disabled="activePage === pages" class="rounded-lg bg-slate-100 p-2 font-medium text-slate-800 shadow-md">NEXT</button>
+        <button @click="prevPage" :disabled="activePage === 1" class="rounded-2xl bg-slate-100 p-2 font-medium text-slate-800 shadow-md">PREV</button>
+        <button v-for="page in pages" :key="page" class="rounded-2xl bg-slate-100 p-2 font-medium text-slate-800 shadow-md" :class="page === activePage ? 'bg-yellow-300 text-slate-700' : '' " >{{ page }}</button>               
+        <button @click="nextPage" :disabled="activePage === pages" class="rounded-2xl bg-slate-100 p-2 font-medium text-slate-800 shadow-md">NEXT</button>
     </div>
 </template>
